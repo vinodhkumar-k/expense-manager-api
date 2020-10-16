@@ -1,0 +1,22 @@
+{
+  "name": "expense-manager-api",
+  "version": "1.0.0",
+  "description": "An application built using React, Redux, Express and MongoDB to manage user's expenses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinodhkumar-k/expense-manager-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinodhkumar-k/expense-manager-api/issues"
+  },
+  "homepage": "https://github.com/vinodhkumar-k/expense-manager-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
