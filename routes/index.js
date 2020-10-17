@@ -5,6 +5,7 @@ const express = require('express'),
 
 router.get('/expenses', expensesController.getExpenses);
 
+// Move below post method to expenses controller
 router.post('/expenses', (req, res) => {
   let expense = new Expense(req.body);
   expense.save((err, exp) => {
