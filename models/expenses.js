@@ -13,14 +13,14 @@ const expenseDetailsSchema = new mongoose.Schema({
     type: String
   },
   date: {
-    type: Date,
+    type: String, // ToDo: Change to Date
     required: true
   }
 });
 
 const expensesSchema = new mongoose.Schema({
   userId: {
-    type: String,
+    type: Number,
     required: true,
     unique: true
   },
