@@ -1,20 +1,9 @@
 const express = require('express'),
       router = express.Router(),
-      expensesController = require('../controllers/expensesController'),
-      Expense = require('../models/expenses');
+      expensesController = require('../controllers/expensesController');
 
 router.get('/expenses', expensesController.getExpenses);
 
-// Move below post method to expenses controller
-router.post('/expenses', (req, res) => {
-  let expense = new Expense(req.body);
-  expense.save((err, exp) => {
-    console.log('saving')
-    if (err) {
-      return res.status(400).json(err);
-    }
-    return res.status(200).json(exp);
-  });
-});
+router.post('/expenses', expensesController.addExpense);
 
 module.exports = router;
