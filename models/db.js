@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+      config = require('../config/config.json');
 
-mongoose.connect("mongodb://127.0.0.1:27017/ExpenseManager", { useNewUrlParser: true }); // the url should come from config file
+mongoose.connect(config.dbURI, { useNewUrlParser: true });
 
 const db = mongoose.connection;
 
