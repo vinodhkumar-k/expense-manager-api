@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const expenseDetailsSchema = new mongoose.Schema({
+  expenseId: {
+    type: Number,
+    required: true,
+    unique: true
+  },
   category: {
     type: String,
     required: true
