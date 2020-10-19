@@ -1,4 +1,5 @@
-const Expense = require('../models/expenses');
+const expensesService = require('../services/expensesService');
+const Expense = require('../models/expenses'); // ToDo: Move this model to expensesService file
 
 const getExpenses = (req, res) => {
   res.json({expenses: {
@@ -9,15 +10,14 @@ const getExpenses = (req, res) => {
   }});
 };
 
+const getExpensesByUser = (req, res) => {
+  const userId = req.params.id;
+  console.log('User Id: ' + userId);
+  
+};
+
 const addExpense = (req, res) => {
-  let expense = new Expense(req.body);
-  expense.save((err, exp) => {
-    console.log('saving')
-    if (err) {
-      return res.status(400).json(err);
-    }
-    return res.status(200).json(exp);
-  });
+  expensesService.addExpense(req.body);
 };
 
 exports.getExpenses = getExpenses;
