@@ -17,7 +17,13 @@ const getExpensesByUser = (req, res) => {
 };
 
 const addExpense = (req, res) => {
-  expensesService.addExpense(req.body);
+  expensesService.addExpense(req.body)
+    .then(
+      () => res.status(200)
+    )
+    .catch(
+      () => res.status(400)
+    )
 };
 
 exports.getExpenses = getExpenses;
