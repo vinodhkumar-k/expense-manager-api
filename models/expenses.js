@@ -38,7 +38,10 @@ const expensesSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  expenses: [expenseDetailsSchema]
+  expenses: {
+    type: Array, // ToDo: Try to assign type as expenseDetailsSchema
+    default: []
+  }
 });
 
 module.exports = mongoose.model('Expenses', expensesSchema);
