@@ -1,5 +1,9 @@
 const expensesService = require('../services/expensesService');
-const Expense = require('../models/expenses'); // ToDo: Move this model to expensesService file
+
+const sendJSONResponse = (res, responseObj) => {
+  res.status(responseObj.status);
+  res.json(responseObj.jsonResult);
+};
 
 const getExpenses = (req, res) => {
   res.json({expenses: {
@@ -18,12 +22,8 @@ const getExpensesByUser = (req, res) => {
 
 const addExpense = (req, res) => {
   expensesService.addExpense(req.body)
-    .then(
-      () => res.status(200)
-    )
-    .catch(
-      () => res.status(400)
-    )
+    .then(responseObj => sendJSONResponse(res, responseObj))
+    .catch(responseObj => sendJSONResponse(res, responseObj))
 };
 
 exports.getExpenses = getExpenses;
