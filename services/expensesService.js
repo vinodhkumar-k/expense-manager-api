@@ -21,7 +21,7 @@ const getUserExpensesByMonth = (userId, month) => {
     if (err) {
       deferred.reject({ "status": 500, "jsonResult": { "result": error } });
     } else {
-      const value = result[0].expenses.find(expense => expense.month === month);
+      const value = result[0].expenses.find(expense => expense.month === month); // use lodash
       if (!value) {
         deferred.reject({ "status": 500, "jsonResult": { "result": "No expenses for given month" } });
       }
@@ -84,6 +84,44 @@ const addExpense = (expenseDetails) => {
   return deferred.promise;
 };
 
+const updateExpense = (expenseDetails) => {
+  const deferred = q.defer();
+  const userId = expenseDetails.userId;
+  Expense.find({userId}).exec((err, user) => {
+    if (err) {
+      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+    } else if (!user.length) {
+      deferred.reject({"status": 404, "jsonResult": {"result": "User not found"}});
+    } else {
+      const expense = _.find(user[0].expenses, {month: expenseDetails.expenses.month});
+      const expenseIndex = _.findIndex(user[0].expenses, {month: expenseDetails.expenses.month});
+      if (!expense) {
+        deferred.reject({"status": 404, "jsonResult": {"result": "Could not find the expenses"}});
+      } else {
+        const expenditure = _.find(expense.expenditure, {expenseId: expenseDetails.expenses.expenditure[0].expenseId});
+        const expenditureIndex = _.findIndex(expense.expenditure, {expenseId: expenseDetails.expenses.expenditure[0].expenseId});
+        const updateExpenditure = expenseDetails.expenses.expenditure[0];
+        expenditure.date = updateExpenditure.date;
+        expenditure.category = updateExpenditure.category;
+        expenditure.amount = updateExpenditure.amount;
+        expenditure.details = updateExpenditure.details;
+
+        user[0].expenses[expenseIndex]['expenditure'][expenditureIndex] = expenditure;
+        user[0].markModified("expenses");
+        user[0].save((error, updatedUser) => {
+          if (error) {
+            deferred.reject({"status": 500, "jsonResult": {"result": error}});
+          } else {
+            deferred.resolve({"status": 200, "jsonResult": {"result": updatedUser}});
+          }
+        });
+      }
+    }
+  });
+  return deferred.promise;
+};
+
 exports.addExpense = addExpense;
 exports.getExpensesByUser = getExpensesByUser;
-exports.getUserExpensesByMonth = getUserExpensesByMonth
+exports.getUserExpensesByMonth = getUserExpensesByMonth;
+exports.updateExpense = updateExpense;
