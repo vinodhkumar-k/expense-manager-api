@@ -3,6 +3,19 @@ const mongoose = require('mongoose'),
   _ = require('lodash');
 const Expense = require('../models/expenses');
 
+const getExpensesByUser = (userId) => {
+  const deferred = q.defer();
+  Expense.find({userId}).exec((err, result) => {
+    if (err) {
+      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+    } else {
+      console.log(result);
+      deferred.resolve({ "status": 200, "jsonResult": { "result": result } });
+    }
+  });
+  return deferred.promise;
+}
+
 const addExpense = (expenseDetails) => {
   const deferred = q.defer();
   const userId = expenseDetails.userId;
@@ -57,3 +70,4 @@ const addExpense = (expenseDetails) => {
 };
 
 exports.addExpense = addExpense;
+exports.getExpensesByUser = getExpensesByUser;
