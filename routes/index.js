@@ -8,4 +8,6 @@ router.get('/expenses/:id/:month', expensesController.getUserExpensesByMonth);
 
 router.post('/expenses', expensesController.addExpense);
 
+router.put('/expenses', expensesController.updateExpense);
+
 module.exports = router;
