@@ -9,8 +9,23 @@ const getExpensesByUser = (userId) => {
     if (err) {
       deferred.reject({ "status": 500, "jsonResult": { "result": error } });
     } else {
-      console.log(result);
       deferred.resolve({ "status": 200, "jsonResult": { "result": result } });
+    }
+  });
+  return deferred.promise;
+}
+
+const getUserExpensesByMonth = (userId, month) => {
+  const deferred = q.defer();
+  Expense.find({userId}).exec((err, result) => {
+    if (err) {
+      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+    } else {
+      const value = result[0].expenses.find(expense => expense.month === month);
+      if (!value) {
+        deferred.reject({ "status": 500, "jsonResult": { "result": "No expenses for given month" } });
+      }
+      deferred.resolve({ "status": 200, "jsonResult": { "result": value } });
     }
   });
   return deferred.promise;
@@ -71,3 +86,4 @@ const addExpense = (expenseDetails) => {
 
 exports.addExpense = addExpense;
 exports.getExpensesByUser = getExpensesByUser;
+exports.getUserExpensesByMonth = getUserExpensesByMonth
