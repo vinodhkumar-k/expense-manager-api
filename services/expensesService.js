@@ -14,13 +14,10 @@ const addExpense = (expenseDetails) => {
       //deferred.reject({"status": 404, "jsonResult": {"result": "User not found"}});
       new Expense(expenseDetails).save((error, result) => {
         if (error) {
-          console.log("Error occured is");
-          console.log(error);
-          return;
+          deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+        } else {
+          deferred.resolve({ "status": 200, "jsonResult": { "result": result } });
         }
-        console.log("Result is: ");
-        console.log(result);
-        return;
       })
     } else {
       let expensesForMonth = _.find(user[0].expenses, { month: expenseDetails.expenses.month });
@@ -31,7 +28,7 @@ const addExpense = (expenseDetails) => {
           {$push: {"expenses.$.expenditure": newExpense}},
           (error, result) => {
             if (error) {
-              deferred.reject({ "status": 500, "jsonResult": { "result": error } })
+              deferred.reject({ "status": 500, "jsonResult": { "result": error } });
             } else if (!result) {
               deferred.reject({ "status": 404, "jsonResult": { "result": "Could not find the expenses" } });
             } else {
