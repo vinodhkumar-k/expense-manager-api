@@ -99,11 +99,42 @@ const updateExpense = (expenseDetails) => {
         const expenditureIndex = _.findIndex(expense.expenditure, {expenseId: expenseDetails.expenses.expenditure[0].expenseId});
         user[0].expenses[expenseIndex]['expenditure'][expenditureIndex] = {...expenseDetails.expenses.expenditure[0]};
         user[0].markModified("expenses");
-        user[0].save((error, updatedUser) => {
+        user[0].save((error, updatedExpense) => {
           if (error) {
             deferred.reject({"status": 500, "jsonResult": {"result": error}});
           } else {
-            deferred.resolve({"status": 200, "jsonResult": {"result": updatedUser}});
+            deferred.resolve({"status": 200, "jsonResult": {"result": updatedExpense}});
+          }
+        });
+      }
+    }
+  });
+  return deferred.promise;
+};
+
+const deleteExpense = (expenseDetails) => {
+  const deferred = q.defer();
+  const userId = expenseDetails.userId;
+  Expense.find({userId}).exec((err, user) => {
+    if (err) {
+      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+    } else if (!user.length) {
+      deferred.reject({"status": 404, "jsonResult": {"result": "User not found"}});
+    } else {
+      const expense = _.find(user[0].expenses, {month: expenseDetails.month});
+      const expenseIndex = _.findIndex(user[0].expenses, {month: expenseDetails.month});
+      if(!expense) {
+        deferred.reject({"status": 404, "jsonResult": {"result": "Could not find the expenses"}});
+      } else {
+        _.remove(expense.expenditure, {expenseId: expenseDetails.expenseId});
+        user[0].expenses[expenseIndex]["expenditure"] = expense.expenditure;
+        user[0].markModified("expenses");
+
+        user[0].save((error, updatedExpense) => {
+          if (error) {
+            deferred.reject({"status": 500, "jsonResult": {"result": error}});
+          } else {
+            deferred.resolve({"status": 200, "jsonResult": {"result": updatedExpense}});
           }
         });
       }
@@ -116,3 +147,4 @@ exports.addExpense = addExpense;
 exports.getExpensesByUser = getExpensesByUser;
 exports.getUserExpensesByMonth = getUserExpensesByMonth;
 exports.updateExpense = updateExpense;
+exports.deleteExpense = deleteExpense;
