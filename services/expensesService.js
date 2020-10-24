@@ -21,11 +21,10 @@ const getUserExpensesByMonth = (userId, month) => {
     if (err) {
       deferred.reject({ "status": 500, "jsonResult": { "result": error } });
     } else {
-      const value = result[0].expenses.find(expense => expense.month === month); // use lodash
       if (!value) {
         deferred.reject({ "status": 500, "jsonResult": { "result": "No expenses for given month" } });
       }
-      deferred.resolve({ "status": 200, "jsonResult": { "result": value } });
+      deferred.resolve({ "status": 200, "jsonResult": { "result": _.find(result[0].expenses, {month}) } });
     }
   });
   return deferred.promise;
