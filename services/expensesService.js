@@ -127,7 +127,11 @@ const deleteExpense = (expenseDetails) => {
         deferred.reject({"status": 404, "jsonResult": {"result": "Could not find the expenses"}});
       } else {
         _.remove(expense.expenditure, {expenseId: expenseDetails.expenseId});
-        user[0].expenses[expenseIndex]["expenditure"] = expense.expenditure;
+        if (!expense.expenditure.length) {
+          _.remove(user[0].expenses, {month: expenseDetails.month});
+        } else {
+          user[0].expenses[expenseIndex]["expenditure"] = expense.expenditure;
+        }
         user[0].markModified("expenses");
 
         user[0].save((error, updatedExpense) => {
