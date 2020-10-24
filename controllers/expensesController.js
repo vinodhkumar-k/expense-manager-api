@@ -23,6 +23,13 @@ const addExpense = (req, res) => {
     .catch(responseObj => sendJSONResponse(res, responseObj));
 };
 
+const updateExpense = (req, res) => {
+  expensesService.updateExpense(req.body)
+    .then(responseObj => sendJSONResponse(res, responseObj))
+    .catch(responseObj => sendJSONResponse(res, responseObj));
+};
+
 exports.getExpensesByUser = getExpensesByUser;
 exports.addExpense = addExpense;
 exports.getUserExpensesByMonth = getUserExpensesByMonth;
+exports.updateExpense = updateExpense;
