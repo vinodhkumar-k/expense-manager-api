@@ -13,9 +13,16 @@ const getTotalExpensesForAllMonths = (req, res) => {
 
 const getCategoryWiseExpensesForAMonth = (req, res) => {
   analyticsService.getCategoryWiseExpensesForAMonth(Number(req.params.id), req.params.month)
-  .then(responseObj => sendJSONResponse(res, responseObj))
-  .catch(responseObj => sendJSONResponse(res, responseObj));
+    .then(responseObj => sendJSONResponse(res, responseObj))
+    .catch(responseObj => sendJSONResponse(res, responseObj));
 }
+
+const getCategoryWiseExpensesForAllMonths = (req, res) => {
+  analyticsService.getCategoryWiseExpensesForAllMonths(Number(req.params.id))
+    .then(responseObj => sendJSONResponse(res, responseObj))
+    .catch(responseObj => sendJSONResponse(res, responseObj));
+};
 
 exports.getTotalExpensesForAllMonths = getTotalExpensesForAllMonths;
 exports.getCategoryWiseExpensesForAMonth = getCategoryWiseExpensesForAMonth;
+exports.getCategoryWiseExpensesForAllMonths = getCategoryWiseExpensesForAllMonths;
