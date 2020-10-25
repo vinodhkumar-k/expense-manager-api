@@ -17,4 +17,6 @@ router.delete('/expenses/:id/:month/:expenseId', expensesController.deleteExpens
 
 router.get('/analytics/:id', analyticsController.getTotalExpensesForAllMonths);
 
+router.get('/analytics/category/:id/:month', analyticsController.getCategoryWiseExpensesForAMonth);
+
 module.exports = router;
