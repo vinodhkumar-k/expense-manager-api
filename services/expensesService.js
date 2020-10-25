@@ -7,7 +7,7 @@ const getExpensesByUser = (userId) => {
   const deferred = q.defer();
   Expense.find({userId}).exec((err, result) => {
     if (err) {
-      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+      deferred.reject({ "status": 500, "jsonResult": { "result": err } });
     } else {
       deferred.resolve({ "status": 200, "jsonResult": { "result": result } });
     }
@@ -19,7 +19,7 @@ const getUserExpensesByMonth = (userId, month) => {
   const deferred = q.defer();
   Expense.find({userId}).exec((err, result) => {
     if (err) {
-      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+      deferred.reject({ "status": 500, "jsonResult": { "result": err } });
     } else {
       const expensesForMonth = _.find(result[0].expenses, {month});
       if (!expensesForMonth) {
@@ -87,7 +87,7 @@ const updateExpense = (expenseDetails) => {
   const userId = expenseDetails.userId;
   Expense.find({userId}).exec((err, user) => {
     if (err) {
-      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+      deferred.reject({ "status": 500, "jsonResult": { "result": err } });
     } else if (!user.length) {
       deferred.reject({"status": 404, "jsonResult": {"result": "User not found"}});
     } else {
@@ -117,7 +117,7 @@ const deleteExpense = (expenseDetails) => {
   const userId = expenseDetails.userId;
   Expense.find({userId}).exec((err, user) => {
     if (err) {
-      deferred.reject({ "status": 500, "jsonResult": { "result": error } });
+      deferred.reject({ "status": 500, "jsonResult": { "result": err } });
     } else if (!user.length) {
       deferred.reject({"status": 404, "jsonResult": {"result": "User not found"}});
     } else {
