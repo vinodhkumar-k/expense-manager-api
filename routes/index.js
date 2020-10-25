@@ -19,4 +19,6 @@ router.get('/analytics/:id', analyticsController.getTotalExpensesForAllMonths);
 
 router.get('/analytics/category/:id/:month', analyticsController.getCategoryWiseExpensesForAMonth);
 
+router.get('/analytics/category/:id', analyticsController.getCategoryWiseExpensesForAllMonths);
+
 module.exports = router;
