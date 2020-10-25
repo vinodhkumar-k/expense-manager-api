@@ -1,7 +1,6 @@
-const mongoose = require('mongoose'),
+const Expense = require('../models/expenses'),
   q = require('q'),
   _ = require('lodash');
-const Expense = require('../models/expenses');
 
 const getExpensesByUser = (userId) => {
   const deferred = q.defer();
@@ -15,7 +14,7 @@ const getExpensesByUser = (userId) => {
   return deferred.promise;
 }
 
-const getUserExpensesByMonth = (userId, month) => {
+const getExpensesForSpecificMonth = (userId, month) => {
   const deferred = q.defer();
   Expense.find({userId}).exec((err, result) => {
     if (err) {
@@ -35,7 +34,7 @@ const addExpense = (expenseDetails) => {
   const deferred = q.defer();
   const userId = expenseDetails.userId;
   const newExpense = {...expenseDetails.expenses.expenditure[0]};
-  Expense.find({ userId: userId }).exec((err, user) => {
+  Expense.find({userId}).exec((err, user) => {
     if (err) {
       deferred.reject({ "status": 500, "jsonResult": { "result": err } });
     } else if (!user.length) {
@@ -149,6 +148,6 @@ const deleteExpense = (expenseDetails) => {
 
 exports.addExpense = addExpense;
 exports.getExpensesByUser = getExpensesByUser;
-exports.getUserExpensesByMonth = getUserExpensesByMonth;
+exports.getExpensesForSpecificMonth = getExpensesForSpecificMonth;
 exports.updateExpense = updateExpense;
 exports.deleteExpense = deleteExpense;
