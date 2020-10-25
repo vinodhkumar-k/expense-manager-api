@@ -5,7 +5,7 @@ const express = require('express'),
 
 router.get('/expenses/:id', expensesController.getExpensesByUser);
 
-router.get('/expenses/:id/:month', expensesController.getUserExpensesByMonth);
+router.get('/expenses/:id/:month', expensesController.getExpensesForSpecificMonth);
 
 router.post('/expenses', expensesController.addExpense);
 
