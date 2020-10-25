@@ -11,8 +11,8 @@ const getExpensesByUser = (req, res) => {
     .catch(responseObj => sendJSONResponse(res, responseObj));
 };
 
-const getUserExpensesByMonth = (req, res) => {
-  expensesService.getUserExpensesByMonth(req.params.id, req.params.month)
+const getExpensesForSpecificMonth = (req, res) => {
+  expensesService.getExpensesForSpecificMonth(req.params.id, req.params.month)
   .then(responseObj => sendJSONResponse(res, responseObj))
   .catch(responseObj => sendJSONResponse(res, responseObj));
 };
@@ -42,6 +42,6 @@ const deleteExpense = (req, res) => {
 
 exports.getExpensesByUser = getExpensesByUser;
 exports.addExpense = addExpense;
-exports.getUserExpensesByMonth = getUserExpensesByMonth;
+exports.getExpensesForSpecificMonth = getExpensesForSpecificMonth;
 exports.updateExpense = updateExpense;
 exports.deleteExpense = deleteExpense;
