@@ -55,4 +55,5 @@ const getCategoryWiseExpensesForAllMonths = (userId) => {
 
 exports.getTotalExpensesForAllMonths = getTotalExpensesForAllMonths;
 exports.getCategoryWiseExpensesForAMonth = getCategoryWiseExpensesForAMonth;
+
 exports.getCategoryWiseExpensesForAllMonths = getCategoryWiseExpensesForAllMonths;
