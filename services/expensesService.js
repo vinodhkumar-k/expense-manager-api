@@ -22,7 +22,7 @@ const getExpensesForSpecificMonth = (userId, month) => {
     } else {
       const expensesForMonth = _.find(result[0].expenses, {month});
       if (!expensesForMonth) {
-        deferred.reject({ "status": 500, "jsonResult": { "result": "No expenses for given month" } });
+        deferred.reject({ "status": 404, "jsonResult": { "result": "No expenses for given month" } });
       }
       deferred.resolve({ "status": 200, "jsonResult": { "result":  expensesForMonth} });
     }
